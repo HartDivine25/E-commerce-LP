@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Multivitamin Capsules — Healthy Essentials</title>
+
+  <link rel="stylesheet" href="product-style.css">
+
+</head>
+<body>
+  <a href="index.html">←</a>
+  <main>
+    <h1>Multivitamin Capsules</h1>
+    <a href="https://www.vitabiotics.com/collections/multivitamins?srsltid=AfmBOoo8v1lDAS9pUNQpmaMWsmtEAHPOTSzbX6w9y6q94FQLsDtP0mtr" target="_blank">
+      <img src="c:\Users\OWNER\OneDrive\Documents\GitHub\E-commerce Landing Page\Photo\Multivitamin.jpeg" alt="Multivitamin Capsules" width="300"></a>
+    <p><strong>Price:</strong> ₦5,000</p>
+
+    <h2>Product Details</h2>
+    <ul>
+      <li>Daily all-in-one vitamins</li>
+      <li>Supports general wellbeing</li>
+      <li>One capsule daily</li>
+    </ul>
+
+    <h2>How to Use</h2>
+    <p>Take one capsule daily with food.</p>
+
+    <h2>Ingredients</h2>
+    <p>Vitamins A, C, D, E, B-complex, minerals.</p>
+
+<button class="add-to-cart" data-name="Multivitamin Capsules" data-price="5000">
+  Add to Cart
+</button>
+
+ <br><br>
+<a href="Checkout.html" class="checkout-link">🛍️ Go to Checkout</a>
+<script>
+  const addToCartButtons = document.querySelectorAll(".add-to-cart");
+
+  addToCartButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const productName = button.getAttribute("data-name");
+      const productPrice = parseFloat(button.getAttribute("data-price"));
+
+      // Retrieve existing cart
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      // Check if product already exists
+      const existing = cart.find(item => item.name === productName);
+
+      if (existing) {
+        existing.quantity += 1; // Increase quantity if already there
+      } else {
+        cart.push({ name: productName, price: productPrice, quantity: 1 });
+      }
+
+      // Save back to localStorage
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert(`${productName} added to cart!`);
+    });
+  });
+</script>
+
+  </main>
+</body>
+</html>

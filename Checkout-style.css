@@ -1,0 +1,295 @@
+/* === PAYMENT PAGE BACKGROUND & ANIMATION === */
+body.payment-page {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  color: white;
+  overflow-x: hidden;
+  position: relative;
+  background: linear-gradient(120deg, #000000, #0d0d0d, #1a1a1a);
+  background-size: 300% 300%;
+  animation: bgShift 10s ease infinite;
+}
+
+/* Smooth gradient animation */
+@keyframes bgShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Floating particles (soft gold dots) */
+.payment-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,215,0,0.15) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: floatParticles 8s linear infinite;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+@keyframes floatParticles {
+  from { background-position: 0 0; }
+  to { background-position: 60px 60px; }
+}
+
+/* === Checkout Container (Foreground) === */
+.checkout-container {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 120px auto;
+  padding: 40px;
+  background: rgba(15, 15, 15, 0.85);
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+  border: 1px solid gold;
+  backdrop-filter: blur(10px);
+  animation: fadeSlide 1.5s ease forwards;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === Title & Headings === */
+.checkout-container h1 {
+  text-align: center;
+  color: gold;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  letter-spacing: 1px;
+  animation: glowText 3s ease-in-out infinite alternate;
+}
+
+@keyframes glowText {
+  from { text-shadow: 0 0 5px gold; }
+  to { text-shadow: 0 0 20px gold, 0 0 40px #f5c400; }
+}
+
+/* === Order Summary Box === */
+.order-summary {
+  background: rgba(26, 26, 26, 0.9);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  border: 1px solid gold;
+  animation: fadeIn 1.5s ease;
+}
+
+/* === Payment Section === */
+.payment-section {
+  background: rgba(26, 26, 26, 0.9);
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid gold;
+  animation: fadeIn 1.5s ease 0.3s both;
+}
+
+/* === Inputs === */
+.payment-section input,
+.payment-section select {
+  background: #000;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 10px;
+  color: white;
+  width: 100%;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.payment-section input:focus,
+.payment-section select:focus {
+  border-color: gold;
+  box-shadow: 0 0 8px gold;
+}
+
+/* === Pay Button === */
+.pay-btn {
+  display: block;
+  width: 100%;
+  background: gold;
+  color: black;
+  border: none;
+  border-radius: 30px;
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.pay-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: all 0.5s ease;
+}
+
+.pay-btn:hover::after {
+  left: 100%;
+}
+
+.pay-btn:hover {
+  transform: scale(1.05);
+  background: #f5c400;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .checkout-container {
+    margin: 80px 15px;
+    padding: 25px;
+  }
+}
+/* === Quantity Controls === */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qty-btn {
+  background: gold;
+  border: none;
+  color: black;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.qty-btn:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 15px gold;
+}
+
+.qty {
+  color: white;
+  font-weight: 600;
+}
+
+/* === Navigation Buttons (Back/Clear) === */
+.back-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.nav-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  background: gold;
+  color: black;
+}
+
+.nav-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px gold;
+}
+
+.nav-btn.danger {
+  background: #ff4d4d;
+  color: white;
+}
+
+.nav-btn.danger:hover {
+  background: #ff6666;
+  box-shadow: 0 0 10px #ff4d4d;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(20, 20, 20, 0.8);
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 1px solid gold;
+  animation: fadeIn 0.4s ease;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quantity-controls button {
+  background: gold;
+  border: none;
+  color: black;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.quantity-controls button:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 10px gold;
+}
+
+.total-section {
+  text-align: right;
+  font-size: 1.2rem;
+  color: gold;
+  margin-top: 25px;
+  border-top: 1px solid gold;
+  padding-top: 15px;
+}
+.back-btn {
+  display: inline-block;
+  background: gold;
+  color: black;
+  padding: 8px 16px;
+  border-radius: 25px;
+  text-decoration: none;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+.back-btn:hover {
+  background: #f5c400;
+  transform: scale(1.05);
+}
+
+
+

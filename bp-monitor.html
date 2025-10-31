@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Digital BP Monitor — Healthy Essentials</title>
+  
+  <link rel="stylesheet" href="product-style.css">
+
+</head>
+<body>
+  <a href="index.html">←</a>
+  <main>
+    <h1>Digital Blood Pressure Monitor</h1>
+     <a href="https://www.nationwidechildrens.org/family-resources-education/health-wellness-and-safety-resources/helping-hands/digital-blood-pressure-measurement" target="_blank">
+      <img src="c:\Users\OWNER\OneDrive\Documents\GitHub\E-commerce Landing Page\Photo\digital-bp-monitor-.jpeg" alt="Digital Blood Pressure Monitor" width="300"></a>
+   
+    <p><strong>Price:</strong> ₦18,000</p>
+
+    <h2>Product Details</h2>
+    <ul>
+      <li>Easy-to-read digital display</li>
+      <li>Memory for previous readings</li>
+      <li>Portable and battery-powered</li>
+    </ul>
+
+    <h2>How to Use</h2>
+    <p>Wrap cuff around upper arm, sit relaxed, start measurement. Follow manual for accuracy.</p>
+
+    <h2>Includes</h2>
+    <p>Device, cuff, batteries (if included), instruction manual.</p>
+
+   <button class="add-to-cart" data-name="BP-Monitor" data-price="18000">
+  Add to Cart
+</button>
+
+  <br><br>
+<a href="Checkout.html" class="checkout-link">🛍️ Go to Checkout</a>
+<script>
+  const addToCartButtons = document.querySelectorAll(".add-to-cart");
+
+  addToCartButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const productName = button.getAttribute("data-name");
+      const productPrice = parseFloat(button.getAttribute("data-price"));
+
+      // Retrieve existing cart
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      // Check if product already exists
+      const existing = cart.find(item => item.name === productName);
+
+      if (existing) {
+        existing.quantity += 1; // Increase quantity if already there
+      } else {
+        cart.push({ name: productName, price: productPrice, quantity: 1 });
+      }
+
+      // Save back to localStorage
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert(`${productName} added to cart!`);
+    });
+  });
+</script>
+
+  </main>
+</body>
+</html>

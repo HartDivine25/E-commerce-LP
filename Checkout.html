@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — Healthy Essentials</title>
+  <link rel="stylesheet" href="Checkout-style.css">
+</head>
+
+<body class="payment-page">
+
+  <div class="checkout-container">
+    <h1>Your Cart</h1>
+    <div id="cart-items"></div>
+
+    <div class="total-section">
+      <h2>Total: ₦<span id="cart-total">0</span></h2>
+      <a href="index.html" class="back-btn">← Continue Shopping</a>
+    </div>
+
+    <!-- 💳 PAYMENT DETAILS -->
+    <div class="payment-section">
+      <h2>Payment Details</h2>
+      <form id="paymentForm">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="method">Payment Method</label>
+        <select id="method" required>
+          <option value="">Select Payment Method</option>
+          <option value="card">Debit/Credit Card</option>
+          <option value="transfer">Bank Transfer</option>
+          <option value="ussd">USSD</option>
+        </select>
+
+        <button type="submit" class="pay-btn">Proceed to Payment</button>
+      </form>
+    </div>
+
+    <!-- ✅ SUCCESS POPUP -->
+    <div id="successPopup" class="popup">
+      <div class="popup-content">
+        <h2>✅ Payment Successful!</h2>
+        <p>Thank you for your purchase. Your order will be processed shortly.</p>
+        <button id="closePopup">OK</button>
+      </div>
+    </div>
+
+    <!-- 🔙 BACK & CLEAR BUTTONS -->
+    <div class="back-links">
+      <button id="goBackBtn" class="back-btn">← Back</button>
+      <button id="clearCartBtn" class="nav-btn danger">🗑 Clear Cart</button>
+    </div>
+  </div>
+
+<script>
+  const cartContainer = document.getElementById("cart-items");
+  const totalDisplay = document.getElementById("cart-total");
+  const clearCartBtn = document.getElementById("clearCartBtn");
+  const goBackBtn = document.getElementById("goBackBtn");
+  const form = document.getElementById("paymentForm");
+  const popup = document.getElementById("successPopup");
+  const closePopup = document.getElementById("closePopup");
+
+  // Load cart from localStorage
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  // 🛒 Render cart items dynamically
+  function renderCart() {
+    cartContainer.innerHTML = "";
+
+    if (cart.length === 0) {
+      cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+      totalDisplay.textContent = "0";
+      return;
+    }
+
+    let total = 0;
+    cart.forEach((item, index) => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+
+      const div = document.createElement("div");
+      div.classList.add("cart-item");
+      div.innerHTML = `
+        <p><strong>${item.name}</strong></p>
+        <p>₦${item.price.toLocaleString()}</p>
+        <div class="quantity-controls">
+          <button class="minus" data-index="${index}">−</button>
+          <span>${item.quantity}</span>
+          <button class="plus" data-index="${index}">+</button>
+          <button class="remove" data-index="${index}">🗑</button>
+        </div>
+      `;
+      cartContainer.appendChild(div);
+    });
+
+    totalDisplay.textContent = total.toLocaleString();
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+
+  // ➕➖🗑 Handle plus/minus/remove
+  cartContainer.addEventListener("click", (e) => {
+    const index = e.target.dataset.index;
+    if (index === undefined) return;
+
+    if (e.target.classList.contains("plus")) {
+      cart[index].quantity++;
+    } else if (e.target.classList.contains("minus")) {
+      cart[index].quantity > 1 ? cart[index].quantity-- : cart.splice(index, 1);
+    } else if (e.target.classList.contains("remove")) {
+      cart.splice(index, 1);
+    }
+    renderCart();
+  });
+
+  // 🧹 Clear entire cart
+  clearCartBtn.addEventListener("click", () => {
+    if (confirm("Are you sure you want to clear your cart?")) {
+      cart = [];
+      localStorage.removeItem("cart");
+      renderCart();
+    }
+  });
+
+  // 🔙 Go back to previous page
+  goBackBtn.addEventListener("click", () => {
+    window.history.back();
+  });
+
+  // 💳 Handle payment
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (cart.length === 0) {
+      alert("Your cart is empty!");
+      return;
+    }
+
+    const button = form.querySelector(".pay-btn");
+    button.textContent = "Processing...";
+    button.disabled = true;
+
+    setTimeout(() => {
+      button.textContent = "Proceed to Payment";
+      button.disabled = false;
+      popup.style.display = "flex";
+      localStorage.removeItem("cart"); // clear cart after payment
+      renderCart();
+    }, 2000);
+  });
+
+  // ✅ Close popup
+  closePopup.addEventListener("click", () => {
+    popup.style.display = "none";
+  });
+
+  renderCart();
+</script>
+
+</body>
+</html>
